@@ -1,0 +1,43 @@
+if [ $# -eq 1 ]
+then
+	egrep -i "($1)" mydata>hard.txt
+elif [ $# -eq 2 ]
+then
+	egrep -i "($1|$2)" mydata>hard.txt
+elif [ $# -eq 3 ]
+then
+	egrep -i "($1|$2|$3)" mydata>hard.txt
+elif [ $# -eq 4 ]
+then
+	egrep -i "($1|$2|$3|$4)" mydata>hard.txt
+elif [ $# -eq 5 ]
+then
+	egrep -i "($1|$2|$3|$4|$5)" mydata>hard.txt
+elif [ $# -eq 6 ]
+then
+	egrep -i "($1|$2|$3|$4|$5|$6)" mydata>hard.txt
+elif [ $# -eq 7 ]
+then
+	egrep -i "($1|$2|$3|$4|$5|$6|$7)" mydata>hard.txt
+elif [ $# -eq 8 ]
+then
+	egrep -i "($1|$2|$3|$4|$5|$6|$7|$8)" mydata>hard.txt
+elif [ $# -eq 9 ]
+then
+	egrep -i "($1|$2|$3|$4|$5|$6|$7|$8|$9)" mydata>hard.txt
+else
+	echo "Usage: phone searchfor[...searchfor]"
+	echo "(You didn't tell me what you want to search for)"
+	touch hard.txt
+fi
+if [ $? -eq 0 ]
+then 
+	awk -f display.awk hard.txt
+	rm hard.txt
+else
+	echo "no result"
+fi
+
+
+
+
