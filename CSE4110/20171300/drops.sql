@@ -1,0 +1,12 @@
+drop table receiver;
+drop table deliver_hub;
+drop table hub;
+drop table deliver_assgn;
+drop table ready_deliver;
+drop table driver;
+drop table buy;
+drop table service_buy;
+drop table goods;
+drop table info_goods;
+drop table seller;
+drop table customer;
