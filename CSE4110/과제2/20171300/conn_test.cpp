@@ -33,7 +33,7 @@ int print() {
 	printf("** Find the top k brands by unit sales by the year**\n");
 	printf(" Which K? : 3\n");
 }
-//datetime1ÀÌ ´õ Å©¸é. ±×´Ï±ñ. ´õ ´Ê°Å³ª °°Àº ½Ã°£ÀÏ½Ã. true
+//datetime1ì´ ë” í¬ë©´. ê·¸ë‹ˆê¹. ë” ëŠ¦ê±°ë‚˜ ê°™ì€ ì‹œê°„ì¼ì‹œ. true
 bool compareDatetime(string datetime1,string datetime2) {
 	int year1 = std::stoi(datetime1.substr(0, 4));
 	int month1 = std::stoi(datetime1.substr(5, 2));
@@ -95,7 +95,7 @@ int main(void) {
 	
 	mysql_init(&conn);
 	if (!mysql_real_connect(&conn, host, user, pw, db, 0, NULL, 0)) {
-		cerr << "MySQL ¿¬°á ½ÇÆĞ: " << mysql_error(&conn) << endl;
+		cerr << "MySQL ì—°ê²° ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 		return 1;
 	}
 
@@ -103,7 +103,7 @@ int main(void) {
 	ifstream file(filename);
 
 	if (!file.is_open()) {
-		cerr << "ÆÄÀÏ ¿­±â ½ÇÆĞ" << endl;
+		cerr << "íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨" << endl;
 		return 1;
 	}
 
@@ -111,10 +111,10 @@ int main(void) {
 	string query;
 	while (getline(file, line)) {
 		query += line;
-		// Äõ¸® Á¾°áÀÚÀÎ ';'¸¦ ±âÁØÀ¸·Î ÇÑ Äõ¸®¾¿ ºĞ¸®ÇÏ¿© ½ÇÇà
+		// ì¿¼ë¦¬ ì¢…ê²°ìì¸ ';'ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•œ ì¿¼ë¦¬ì”© ë¶„ë¦¬í•˜ì—¬ ì‹¤í–‰
 		if (!line.empty() && line.back() == ';') {
 			if (mysql_query(&conn, query.c_str()) != 0) {
-				cerr << "Äõ¸® ½ÇÇà ½ÇÆĞ: " << mysql_error(&conn) << endl;
+				cerr << "ì¿¼ë¦¬ ì‹¤í–‰ ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 				return 1;
 			}
 			query.clear();
@@ -128,13 +128,13 @@ int main(void) {
 
 
 
-	//insertÆÄÀÏ ÀĞ±â
+	//insertíŒŒì¼ ì½ê¸°
 
 	mysql_init(&conn);
 
 	if (!mysql_real_connect(&conn, host, user, pw, db, 0, NULL, 0))
 	{
-		cerr << "MySQL ¿¬°á ½ÇÆĞ: " << mysql_error(&conn) << endl;
+		cerr << "MySQL ì—°ê²° ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 		return 1;
 	}
 
@@ -142,7 +142,7 @@ int main(void) {
 	ifstream files(filename);
 
 	if (!files.is_open()) {
-		cerr << "ÆÄÀÏ ¿­±â ½ÇÆĞ" << endl;
+		cerr << "íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨" << endl;
 		return 1;
 	}
 
@@ -152,7 +152,7 @@ int main(void) {
 		if (line == "")
 			continue;
 		if (mysql_query(&conn, line.c_str()) != 0) {
-			cerr << count<<" : Äõ¸® ½ÇÇà ½ÇÆĞ: " << mysql_error(&conn) << endl;
+			cerr << count<<" : ì¿¼ë¦¬ ì‹¤í–‰ ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 			return 1;
 		}
 	}
@@ -160,7 +160,7 @@ int main(void) {
 	files.close();
 	mysql_close(&conn);
 
-	//insertÁ¾·á.
+	//insertì¢…ë£Œ.
 
 	if (mysql_init(&conn) == NULL)
 		printf("mysql_init() error!");
@@ -183,7 +183,7 @@ int main(void) {
 		{
 			printf("%d ERROR : %s\n", mysql_errno(&conn), mysql_error(&conn));
 			return 1;
-		}//sql¿¬µ¿ÄÚµå
+		}//sqlì—°ë™ì½”ë“œ
 
 	
 		int option;
@@ -250,7 +250,7 @@ int main(void) {
 								while ((sql_row = mysql_fetch_row(sql_result)) != NULL)
 								{
 									if (sql_row[5] == car_number) {
-										//±× Â÷¸¦ °ÅÃÄ°£ ¸ğµç ¿î¼ÛÀå ¹øÈ£µé º¤ÅÍ
+										//ê·¸ ì°¨ë¥¼ ê±°ì³ê°„ ëª¨ë“  ìš´ì†¡ì¥ ë²ˆí˜¸ë“¤ ë²¡í„°
 										car_waybill.push_back(sql_row[0]);
 										if (sql_row[3]) {
 											arrival_time.push_back({ sql_row[3],sql_row[0] });
@@ -263,7 +263,7 @@ int main(void) {
 									//count++;
 
 								}
-								//´Ù½Ã Å½»ö.
+								//ë‹¤ì‹œ íƒìƒ‰.
 								mysql_free_result(sql_result);
 								int state = 0;
 								state = mysql_query(connection, query.c_str());
@@ -274,7 +274,7 @@ int main(void) {
 									{
 										if(find(car_waybill.begin(),car_waybill.end(),sql_row[0])!=car_waybill.end())
 										{
-											//hub¿¡°Ô
+											//hubì—ê²Œ
 											if (sql_row[3] &&car_number==sql_row[5]) {
 												if (compareDatetime(year, sql_row[1]) && compareDatetime(sql_row[3], year)) {
 													printf("%s's(customer) goods in %s at %s (this truck start deliver at %s)\n",sql_row[6], sql_row[5], year.c_str(),sql_row[1]);
@@ -282,7 +282,7 @@ int main(void) {
 												}
 
 											}
-											//¼ö½ÅÀÚ¿¡°Ô
+											//ìˆ˜ì‹ ìì—ê²Œ
 											else if(sql_row[4] && car_number == sql_row[5]) {
 												if (compareDatetime(year, sql_row[1]) && compareDatetime(sql_row[4], year)) {
 													printf("%s's(customer) goods in %s at %s (this truck start deliver at %s)\n", sql_row[6], sql_row[5], year.c_str(), sql_row[1]);
@@ -298,23 +298,23 @@ int main(void) {
 									{
 										if (find(car_waybill.begin(), car_waybill.end(), sql_row[0]) != car_waybill.end())
 										{
-											//Çãºê ¹°Ç° ½Ã°£ Ã¼Å©(¿©±â¼­ Ã¼Å©°¡ µÅµµ, ¼ö½ÅÀÚ¸¦ Ã£À»¼ö ÀÖµµ·Ï semi_result¿¡ Ãß°¡)
+											//í—ˆë¸Œ ë¬¼í’ˆ ì‹œê°„ ì²´í¬(ì—¬ê¸°ì„œ ì²´í¬ê°€ ë¼ë„, ìˆ˜ì‹ ìë¥¼ ì°¾ì„ìˆ˜ ìˆë„ë¡ semi_resultì— ì¶”ê°€)
 											if (sql_row[3] && car_number == sql_row[5]) {
 												if (compareDatetime(year, sql_row[1]) && compareDatetime(sql_row[3], year)) 
 												{
 													semi_result.push_back(sql_row[0]);
 												}
 											}
-											//¼ö½ÅÀÚ Àü¼Û ½Ã°£ Ã¼Å©
+											//ìˆ˜ì‹ ì ì „ì†¡ ì‹œê°„ ì²´í¬
 											else if (sql_row[4] && car_number == sql_row[5]) {
 												if (compareDatetime(year, sql_row[1]) && compareDatetime(sql_row[4], year)) 
 												{
 													semi_result.push_back(sql_row[0]);
 												}
 											}
-											//Æ®·° Æø¹ß½Ã ¿î¼ÛÀå ¹øÈ£¸¦ °¡Áö°í ÀÖ´Â semi_resultÀÇ¿¡¼­..
+											//íŠ¸ëŸ­ í­ë°œì‹œ ìš´ì†¡ì¥ ë²ˆí˜¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” semi_resultì˜ì—ì„œ..
 											if (find(semi_result.begin(), semi_result.end(), sql_row[0]) != semi_result.end()) {
-												//¼ö½ÅÀÚ Á¤º¸ Ã£À»¼ö ÀÖ´Â tupleº¸¸é Ãâ·Â
+												//ìˆ˜ì‹ ì ì •ë³´ ì°¾ì„ìˆ˜ ìˆëŠ” tupleë³´ë©´ ì¶œë ¥
 												if (sql_row[4]) {
 													printf("%s's(receiver) goods in %s at %s (receive at %s)\n", sql_row[7], car_number.c_str(), year.c_str(), sql_row[4]);
 													count++;
@@ -324,9 +324,9 @@ int main(void) {
 									}
 								}
 								else if (option2 == 3) {
-									//arrival_time³·Àº°Í ºÎÅÍ Á¤·Ä. 
+									//arrival_timeë‚®ì€ê²ƒ ë¶€í„° ì •ë ¬. 
 									sort(arrival_time.begin(), arrival_time.end());
-									//Ãæµ¹½Ã°£º¸´Ù ÀÛÀº°ÍÁß °¡Àå Å«°Å. ±×´Ï±ñ yearº¸´Ù ÀÛÀ¸¸é °è¼Ó ¾÷µ¥ÀÌÆ® ÇÏ´Ù Å«°Å ¸¸³ª¸é break
+									//ì¶©ëŒì‹œê°„ë³´ë‹¤ ì‘ì€ê²ƒì¤‘ ê°€ì¥ í°ê±°. ê·¸ë‹ˆê¹ yearë³´ë‹¤ ì‘ìœ¼ë©´ ê³„ì† ì—…ë°ì´íŠ¸ í•˜ë‹¤ í°ê±° ë§Œë‚˜ë©´ break
 									string last_day="0000-00-00 00:00:00";
 									string zz="";
 									for (int i = 0; i < arrival_time.size(); i++) {
@@ -526,12 +526,12 @@ int main(void) {
 		mysql_close(connection);
 
 	}
-	//¸¶Áö¸·À¸·Î ÀÖ´ø°Í drop
+	//ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆë˜ê²ƒ drop
 	mysql_init(&conn);
 
 	if (!mysql_real_connect(&conn, host, user, pw, db, 0, NULL, 0))
 	{
-		cerr << "MySQL ¿¬°á ½ÇÆĞ: " << mysql_error(&conn) << endl;
+		cerr << "MySQL ì—°ê²° ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 		return 1;
 	}
 
@@ -539,7 +539,7 @@ int main(void) {
 	ifstream filess(filename);
 
 	if (!filess.is_open()) {
-		cerr << "ÆÄÀÏ ¿­±â ½ÇÆĞ" << endl;
+		cerr << "íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨" << endl;
 		return 1;
 	}
 
@@ -548,7 +548,7 @@ int main(void) {
 		if (line == "")
 			continue;
 		if (mysql_query(&conn, line.c_str()) != 0) {
-			cerr << count << " : Äõ¸® ½ÇÇà ½ÇÆĞ: " << mysql_error(&conn) << endl;
+			cerr << count << " : ì¿¼ë¦¬ ì‹¤í–‰ ì‹¤íŒ¨: " << mysql_error(&conn) << endl;
 			return 1;
 		}
 	}
